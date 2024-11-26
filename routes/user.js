@@ -1,9 +1,14 @@
 const { Router } = require("express");
 const { check } = require('express-validator');
-const {validations} = require("../middlewares/validations")
 const {isRolValid, isEmail, isUserId} = require("../helpers/db-Validators")
-const {validarJWT} = require('../middlewares/validar-jwt')
-const {isAdmin, hasRole} = require("../middlewares/hasRole")
+
+
+//const {validations} = require("../middlewares/validations")
+//const {validarJWT} = require('../middlewares/validar-jwt')
+//const {isAdmin, hasRole} = require("../middlewares/hasRole")
+
+// Forma de importacion con un index
+const {validations, validarJWT, isAdmin, hasRole} = require('../middlewares')
 
 const {
   usersGet,
