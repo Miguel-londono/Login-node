@@ -59,9 +59,42 @@ const googleSingIn = async (req,res) => {
 
   try {
     
-    const googleUser = await googleVerify(id_token)
+    const {name, img, email} = await googleVerify(id_token)
 
-    console.log(googleUser)
+    // Mirar si el correo ya esta en la base de datos 
+
+    let user = await User.findOne({email});
+
+    if (!user){
+      // Tenemos que crearlo 
+
+      const data = {
+        name,
+        email,
+        password: ':]',
+        img,
+        google:true,
+      }
+      user = new User(data);
+      await user.save()
+    }
+
+    //Si el usuario en BD esta en false
+    if(!user.estado){
+      return res.estatus(401).json({
+        msg:'El usuario esta bloqueado Hablar con el admin',
+      })
+  
+    }
+
+    // ahora generamos el JWT 
+
+    const token = await generarJWT(user.id)
+
+    res.json({
+      token,
+      user
+    })
 
   } catch (error) {
     console.log(error)
@@ -70,10 +103,6 @@ const googleSingIn = async (req,res) => {
     })
     
   }
-
-  res.json({
-    msg:'Todo ok google'
-  })
 
 }
 
