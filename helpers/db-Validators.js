@@ -1,5 +1,6 @@
 const Rol = require("../models/rol");
 const User = require('../models/user')
+const Categorie = require('../models/categorie')
 
 const isRolValid = async (rol = "") => {
   const existsRol = await Rol.findOne({ rol });
@@ -22,9 +23,8 @@ const isUserId = async (id = "") => {
 };
 
 
-
 module.exports = {
   isRolValid,
   isEmail,
-  isUserId
-};
+  isUserId,
+}
