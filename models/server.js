@@ -12,7 +12,8 @@ class Server {
     this.path = {
       auth: '/api/auth',
       user: '/api/users"',
-      categories: '/api/categories'
+      categories: '/api/categories',
+      products: '/api/products'
     }
 
     //Conectar a base de datos 
@@ -46,6 +47,7 @@ class Server {
     this.app.use(this.path.user, require("../routes/user"));
     this.app.use(this.path.auth, require("../routes/auth"));
     this.app.use(this.path.categories, require("../routes/categorie"));
+    this.app.use(this.path.products, require("../routes/product"));
   }
 
   listen() {

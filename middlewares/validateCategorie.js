@@ -3,8 +3,6 @@ const Categorie = require('../models/categorie')
 
 
 
-
-
 const isCategorie = async (req, res , next ) =>{
 
 

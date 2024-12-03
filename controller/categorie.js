@@ -97,7 +97,7 @@ const deleteCategorie = async (req, res) => {
 
     //Borramos el Estado del la cateogria 
 
-    //const deleteCategorie = await await Categorie.findByIdAndUpdate(id, {state:false})
+    //const deleteCategorie = await await Categorie.findByIdAndUpdate(id, {state:false} , {new:true} )
 
     res.json(
         {
