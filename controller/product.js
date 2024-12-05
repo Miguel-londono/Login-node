@@ -66,17 +66,47 @@ const createProducts = async (req, res) => {
 };
 
 
-const updateProducts = (req, res) => {
-  res.json("Obtener Productos");
+const updateProducts = async (req, res) => {
+    const {id} = req.params
+    const {name, categorie} = req.body
+
+    //Creando data para actualizar el Producto
+
+    const data = {
+        name,
+        user: req.user._id
+    }
+    
+    
+//Actualizando en la base de datos
+
+  const updateProduct = await Product.findByIdAndUpdate(id, data)
+  updateCategorie.save()
+
+  res.json({updateProduct});
 
 
 };
 
 
-const deleteProducts = (req, res) => {
+const deleteProducts = async (req, res) => {
+
+  const { id } = req.params
+
+    //Borramos el Estado del la cateogria 
+
+    const deleteProduct = await Product.findByIdAndUpdate(id, {state:false} , {new:true} )
+
+    res.json(
+        {
+          deleteProduct
+        }
+    )
+
+
   res.json("Obtener Productos");
 
-  
+
 };
 
 module.exports = {

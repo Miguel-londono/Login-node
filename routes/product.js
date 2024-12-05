@@ -6,6 +6,8 @@ const { getProducts,
     deleteProducts } = require("../controller/product");
 const { validarJWT, validations } = require("../middlewares");
 const { check } = require("express-validator");
+const { isProduct, isCategorieDb } = require("../helpers/db-Validators");
+const { isCategorie } = require("../middlewares/validateCategorie");
 
 
 
@@ -28,16 +30,28 @@ router.get("/:id", [
 router.post("/", [
     validarJWT,
     check('name', 'El nombre del producto es obligatorio').not().isEmpty(),
+    check('id').custom((id) => isProduct(id)),
     validations
 ], createProducts);
 
 //Actualizar Producto
 
-router.put("/id", [], updateProducts);
+router.put("/:id", [
+    validarJWT,
+    check('id', 'No es un id valido de mongo').isMongoId(),
+    check('id').custom((id) => isProduct(id)),
+    check('categorie').custom((name) => isCategorie(name)),
+    validations,
+], updateProducts);
 
 //Borrar Producto
 
-router.delete("/id", [], deleteProducts);
+router.delete("/:id", [
+    validarJWT,
+    check('id', 'No es un id valido de mongo').isMongoId(),
+    check('id').custom((id) => isProduct(id)),
+    validations
+], deleteProducts);
 
 
 module.exports = router
